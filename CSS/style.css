@@ -1,0 +1,166 @@
+:root {
+    --primary: #6366f1; /* Indigo vibrante */
+    --primary-hover: #4f46e5;
+    --success: #10b981;
+    --bg-dark: #0f172a; /* Azul noche profundo */
+    --card-bg: rgba(30, 41, 59, 0.7); /* Transparencia profesional */
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: radial-gradient(circle at top left, #1e1b4b, #0f172a);
+    color: var(--text-main);
+    margin: 0;
+    padding: 40px 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.app-container { max-width: 700px; width: 100%; }
+
+/* Estilo del Título */
+header { text-align: center; margin-bottom: 40px; }
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(99, 102, 241, 0.2);
+    color: var(--primary);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+.main-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 0;
+    background: linear-gradient(to right, #fff, #94a3b8);
+    /* Primero la estándar, luego la de prefijo */
+    background-clip: text; 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.main-title .accent { color: var(--primary); -webkit-text-fill-color: var(--primary); }
+
+/* Estilo de Tarjetas (Glassmorphism) */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    padding: 30px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    margin-bottom: 25px;
+}
+
+/* Formulario */
+label { display: block; font-weight: 500; margin-bottom: 10px; color: var(--text-main); }
+input[type="url"] {
+    width: 100%;
+    padding: 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+input:focus { outline: 2px solid var(--primary); border-color: transparent; }
+
+.color-picker-wrapper { display: flex; align-items: center; gap: 15px; }
+input[type="color"] {
+    width: 50px; height: 50px; border: none; border-radius: 10px; cursor: pointer; background: none;
+}
+
+/* Botones */
+button {
+    cursor: pointer; border: none; padding: 16px 24px; border-radius: 12px;
+    font-weight: 700; transition: all 0.3s ease; font-family: inherit;
+}
+.btn-primary { background: var(--primary); color: white; width: 100%; font-size: 1rem; }
+.btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+.btn-secondary { background: rgba(255,255,255,0.1); color: white; flex: 1; }
+.btn-success { background: var(--success); color: white; flex: 1; }
+
+.actions { display: flex; gap: 15px; margin-top: 20px; }
+
+/* Vista Previa del QR */
+.result-card { text-align: center; border: 1px solid var(--primary); }
+.success-header { margin-bottom: 20px; }
+.icon-check { 
+    width: 40px; height: 40px; background: var(--success); color: white; 
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+    margin: 0 auto 10px; font-weight: bold;
+}
+.qr-preview { 
+    background: white; padding: 30px; border-radius: 20px; 
+    display: inline-block; margin-bottom: 20px; 
+}
+#qr-canvas { width: 250px; height: 250px; }
+.print-footer-text { display: none; color: #000; font-weight: bold; margin-top: 10px; }
+
+/* --- LÓGICA DE IMPRESIÓN CORREGIDA --- */
+@media print {
+    /* Ocultamos absolutamente todo el cuerpo */
+    body { 
+        background: white !important; 
+        margin: 0; 
+        padding: 0;
+    }
+    
+    /* Ocultamos los contenedores principales y botones */
+    header, .card:not(.result-card), .actions, .badge, .success-header {
+        display: none !important;
+    }
+
+    /* Forzamos que la sección del resultado sea visible y esté centrada */
+    .result-card {
+        visibility: visible !important;
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        text-align: center;
+        padding-top: 40px; /* Reducido un poco para dar espacio al QR grande */
+    }
+
+    /* Aseguramos que el área del QR sea visible */
+    .qr-preview {
+        visibility: visible !important;
+        display: inline-block !important;
+        margin: 0 auto;
+        padding: 20px !important; /* Reduce el borde blanco para que el QR use más espacio */
+        background: white !important;
+        border: 2px solid #000 !important; /* Un borde sutil para delimitar el QR en el papel */
+        border-radius: 15px !important;
+    }
+
+    /* FORZAMOS EL TAMAÑO GRANDE DEL QR SOLO EN IMPRESIÓN */
+    .qr-preview canvas {
+        visibility: visible !important;
+        display: inline-block !important;
+        
+        /* Ajusta estos valores si lo quieres aún más grande o un poco más pequeño */
+        width: 700px !important; 
+        height: 600px !important;
+    }
+
+    /* Texto opcional que solo sale en la impresión */
+    .print-footer-text {
+        display: block !important;
+        font-family: sans-serif;
+        font-size: 16pt; /* Subí un poco el tamaño para que vaya acorde al QR */
+        font-weight: bold !important;
+        color: #000;
+        margin-top: 30px;
+    }
+}

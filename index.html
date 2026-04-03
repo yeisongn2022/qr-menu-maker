@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Pro | Solución para Catálogos</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="badge">Freelance Tool</div>
+            <h1 class="main-title">QR <span class="accent">MENU</span> GENERATOR</h1>
+            <p>Transforma tu presencia digital en una experiencia física impecable.</p>
+        </header>
+
+        <main>
+            <section class="card form-card">
+                <div class="form-group">
+                    <label>URL de Destino</label>
+                    <input type="url" id="menu-url" placeholder="https://instagram.com/tu-restaurante" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Personalización de Marca (Color QR)</label>
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="qr-color" value="#6366f1">
+                        <span>Selecciona el color de tu marca</span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="generate-btn" class="btn-primary">GENERAR CÓDIGO QR PROFESIONAL</button>
+                </div>
+            </section>
+
+            <section id="result-section" class="card result-card" style="display:none">
+                <div class="success-header">
+                    <div class="icon-check">✓</div>
+                    <h3>¡Código QR Generado con Éxito!</h3>
+                </div>
+
+                <div id="printable-area" class="qr-preview">
+                    <canvas id="qr-canvas"></canvas>
+                    <div class="print-footer-text">Escanea para ver nuestro menú digital</div>
+                </div>
+
+                <div class="actions">
+                    <button id="download-btn" class="btn-success">DESCARGAR PNG</button>
+                    <button id="print-btn" class="btn-secondary">IMPRIMIR QR</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="JS/app.js"></script>
+</body>
+</html>
